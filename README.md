@@ -3,27 +3,10 @@
 ## 🎯 Objetivo del Proyecto
 El objetivo principal de este proyecto es diseñar, desplegar y operar un Centro de Operaciones de Seguridad (SOC) empresarial en un entorno virtualizado. A través de la integración de Wazuh SIEM, telemetría avanzada de Sysmon y un entorno de Directorio Activo (Windows Server 2022), el laboratorio busca cazar tácticas avanzadas de atacantes mapeadas al framework MITRE ATT&CK (como evasión de defensas y técnicas Living off the Land), automatizando el análisis de malware mediante Inteligencia de Amenazas (CTI) con VirusTotal.
 
-## 🏗️ Arquitectura de Red e Infraestructura (bancolab.local)
-
-El laboratorio está diseñado simulando una red corporativa segmentada, utilizando hipervisores locales para el despliegue de las máquinas virtuales. Toda la telemetría fluye hacia el SIEM central para su análisis en tiempo real.
-
-```mermaid
-graph TD
-    %% Nodos de la infraestructura
-    A[🌐 Internet / API] -->|Threat Intel| B(🧠 Ubuntu Server: Wazuh Manager)
-    
-    subgraph Dominio Corporativo [bancolab.local]
-        C[🏢 Windows Server 2022<br>Domain Controller] --- D[💻 Windows 11<br>Endpoint de Usuario]
-    end
-
-    %% Conexiones de logs y agentes
-    C -.->|Agente Wazuh + Sysmon| B
-    D -.->|Agente Wazuh + Sysmon| B
-    
-    %% Estilos
-    style B fill:#1e4976,stroke:#000,stroke-width:2px,color:#fff
-    style C fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
-    style D fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
+## 🏗️ Topología y Arquitectura de Red (bancolab.local)
+* **Controlador de Dominio (Tier 0):** Windows Server 2022 (`DC-BANCO-01` | IP: `192.168.100.10`)
+* **Endpoint de Usuario (Tier 2):** Windows 11 (`PC-CAJA-01` | IP: `192.168.100.20`)
+* **Cerebro SIEM / Manager:** Ubuntu Server / Wazuh 4.8.2 (`siem-server` | IP: `192.168.100.30`)
 
 ## 🛠️ Stack Tecnológico y Hardening
 * **SIEM / XDR:** Wazuh (Ingesta de logs, análisis de comportamiento y alertas).
