@@ -28,33 +28,23 @@ Durante este laboratorio, se simuló el rol de *Red Team* para evaluar la capaci
 
 ```mermaid
 graph TD
-    %% Estilos de Nodos
-    classDef attacker fill:#5e0000,stroke:#000,stroke-width:2px,color:#fff;
-    classDef siem fill:#0f4c75,stroke:#000,stroke-width:2px,color:#fff;
-    classDef windows fill:#1b5e20,stroke:#000,stroke-width:2px,color:#fff;
-    classDef intel fill:#303030,stroke:#000,stroke-width:2px,color:#fff;
-
-    %% Actores Externos
-    A["☠️ Red Team / Atacante<br>(Simulación LotL)"]:::attacker
-    E["🌐 VirusTotal API<br>(Threat Intelligence)"]:::intel
-
-    subgraph SOC ["🛡️ Security Operations Center (Blue Team)"]
-        B("🧠 Wazuh Manager (SIEM/XDR)<br>Ubuntu Server 22.04 | 192.168.100.30"):::siem
+    %% Inteligencia Externa
+    A["🌐 VirusTotal API"] -.->|"Análisis de Hashes"| B
+    
+    %% Cerebro SIEM
+    B("🧠 Ubuntu Server: Wazuh Manager<br>IP: 192.168.100.30")
+    
+    %% Red Local
+    subgraph LAN ["Dominio Corporativo (bancolab.local)"]
+        C["🏢 Windows Server 2022 (AD)<br>IP: 192.168.100.10"]
+        D["💻 Windows 11 (Endpoint)<br>IP: 192.168.100.20"]
     end
 
-    subgraph LAN ["🏢 Corporate Network (bancolab.local)"]
-        C["🏰 Domain Controller<br>Windows Server 2022 | 192.168.100.10"]:::windows
-        D["💻 Endpoint de Usuario<br>Windows 11 | 192.168.100.20"]:::windows
-        
-        %% Relación en la LAN
-        C -.-|"GPOs & LAPS"| D
-    end
-
-    %% Flujos de Ataque y Defensa
-    A -.->|"Inyección de Tácticas<br>(T1105 / T1087)"| D
-    C ==>|"Logs (Sysmon + Eventos AD)"| B
-    D ==>|"Logs (Sysmon + FIM)"| B
-    B <-->|"Análisis de Hashes / IoCs"| E
-
-    %% Estilos de Enlaces
-    linkStyle 1 stroke:#ff0000,stroke-width:2px,stroke-dasharray: 5 5;
+    %% Flujo de Logs
+    C ==>|"Logs Sysmon + Eventos"| B
+    D ==>|"Logs Sysmon + FIM"| B
+    
+    %% Colores minimalistas
+    style B fill:#1e4976,stroke:#000,stroke-width:2px,color:#fff
+    style C fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
+    style D fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
