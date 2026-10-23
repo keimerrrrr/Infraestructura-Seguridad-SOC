@@ -1,4 +1,4 @@
-# 🛡️ Enterprise SOC & SIEM Architecture Lab
+# 🛡️ Infraestructura-Seguridad-SOC
 
 ## 🎯 Objetivo del Proyecto
 Diseño, despliegue y configuración de un Centro de Operaciones de Seguridad (SOC) en un entorno empresarial virtualizado. Este laboratorio práctico simula la monitorización continua, integración de inteligencia de amenazas (CTI) y *Threat Hunting* proactivo, cazando tácticas reales de atacantes mapeadas al framework **MITRE ATT&CK**.
