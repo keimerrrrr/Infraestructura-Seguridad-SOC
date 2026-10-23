@@ -23,6 +23,7 @@ graph TD
     style B fill:#1e4976,stroke:#000,stroke-width:2px,color:#fff
     style C fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
     style D fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
+```mermaid
 
 ## 🛠️ Stack Tecnológico y Hardening
 * **SIEM / XDR:** Wazuh (Ingesta de logs, análisis de comportamiento y alertas).
