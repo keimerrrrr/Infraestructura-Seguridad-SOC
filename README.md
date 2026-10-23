@@ -25,3 +25,21 @@ Durante este laboratorio, se simuló el rol de *Red Team* para evaluar la capaci
 
 ---
 *Nota: Este repositorio se encuentra en construcción. Se estarán subiendo los archivos de configuración (`ossec.conf`, XML) y las evidencias en captura de pantalla del panel de alertas.*
+
+
+```mermaid
+graph TD
+    A["🌐 Internet / API"] -->|"Threat Intel"| B("🧠 Ubuntu Server: Wazuh Manager")
+    
+    subgraph bancolab ["Dominio Corporativo (bancolab.local)"]
+        C["🏢 Windows Server 2022 (Domain Controller)"]
+        D["💻 Windows 11 (Endpoint de Usuario)"]
+        C --- D
+    end
+
+    C -.->|"Agente Wazuh + Sysmon"| B
+    D -.->|"Agente Wazuh + Sysmon"| B
+    
+    style B fill:#1e4976,stroke:#000,stroke-width:2px,color:#fff
+    style C fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
+    style D fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
