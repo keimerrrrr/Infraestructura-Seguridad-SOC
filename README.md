@@ -25,3 +25,36 @@ Durante este laboratorio, se simuló el rol de *Red Team* para evaluar la capaci
 
 ---
 *Nota: Este repositorio se encuentra en construcción. Se estarán subiendo los archivos de configuración (`ossec.conf`, XML) y las evidencias en captura de pantalla del panel de alertas.*
+
+```mermaid
+graph TD
+    %% Estilos de Nodos
+    classDef attacker fill:#5e0000,stroke:#000,stroke-width:2px,color:#fff;
+    classDef siem fill:#0f4c75,stroke:#000,stroke-width:2px,color:#fff;
+    classDef windows fill:#1b5e20,stroke:#000,stroke-width:2px,color:#fff;
+    classDef intel fill:#303030,stroke:#000,stroke-width:2px,color:#fff;
+
+    %% Actores Externos
+    A["☠️ Red Team / Atacante<br>(Simulación LotL)"]:::attacker
+    E["🌐 VirusTotal API<br>(Threat Intelligence)"]:::intel
+
+    subgraph SOC ["🛡️ Security Operations Center (Blue Team)"]
+        B("🧠 Wazuh Manager (SIEM/XDR)<br>Ubuntu Server 22.04 | 192.168.100.30"):::siem
+    end
+
+    subgraph LAN ["🏢 Corporate Network (bancolab.local)"]
+        C["🏰 Domain Controller<br>Windows Server 2022 | 192.168.100.10"]:::windows
+        D["💻 Endpoint de Usuario<br>Windows 11 | 192.168.100.20"]:::windows
+        
+        %% Relación en la LAN
+        C -.-|"GPOs & LAPS"| D
+    end
+
+    %% Flujos de Ataque y Defensa
+    A -.->|"Inyección de Tácticas<br>(T1105 / T1087)"| D
+    C ==>|"Logs (Sysmon + Eventos AD)"| B
+    D ==>|"Logs (Sysmon + FIM)"| B
+    B <-->|"Análisis de Hashes / IoCs"| E
+
+    %% Estilos de Enlaces
+    linkStyle 1 stroke:#ff0000,stroke-width:2px,stroke-dasharray: 5 5;
