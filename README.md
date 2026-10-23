@@ -7,6 +7,28 @@ El objetivo principal de este proyecto es diseñar, desplegar y operar un Centro
 * **Controlador de Dominio (Tier 0):** Windows Server 2022 (`DC-BANCO-01` | IP: `192.168.100.10`)
 * **Endpoint de Usuario (Tier 2):** Windows 11 (`PC-CAJA-01` | IP: `192.168.100.20`)
 * **Cerebro SIEM / Manager:** Ubuntu Server / Wazuh 4.8.2 (`siem-server` | IP: `192.168.100.30`)
+```mermaid
+graph TD
+    %% Inteligencia Externa
+    A["🌐 VirusTotal API"] -.->|"Análisis de Hashes"| B
+    
+    %% Cerebro SIEM
+    B("🧠 Ubuntu Server: Wazuh Manager<br>IP: 192.168.100.30")
+    
+    %% Red Local
+    subgraph LAN ["Dominio Corporativo (bancolab.local)"]
+        C["🏢 Windows Server 2022 (AD)<br>IP: 192.168.100.10"]
+        D["💻 Windows 11 (Endpoint)<br>IP: 192.168.100.20"]
+    end
+
+    %% Flujo de Logs
+    C ==>|"Logs Sysmon + Eventos"| B
+    D ==>|"Logs Sysmon + FIM"| B
+    
+    %% Colores minimalistas
+    style B fill:#1e4976,stroke:#000,stroke-width:2px,color:#fff
+    style C fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
+    style D fill:#2b7a0b,stroke:#000,stroke-width:2px,color:#fff
 
 ## 🛠️ Stack Tecnológico y Hardening
 * **SIEM / XDR:** Wazuh (Ingesta de logs, análisis de comportamiento y alertas).
